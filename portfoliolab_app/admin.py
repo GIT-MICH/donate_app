@@ -1,3 +1,5 @@
 from django.contrib import admin
+from portfoliolab_app.models import Category, Institution
 
-# Register your models here.
+admin.site.register(Category)
+admin.site.register(Institution)
