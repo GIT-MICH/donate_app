@@ -5,6 +5,9 @@ from django.db import models
 class Category(models.Model):
     name = models.CharField(max_length=128, verbose_name='Kategoria')
 
+    def __str__(self):
+        return self.name
+
 
 class Institution(models.Model):
     FUNDACJA = 'fundacja'
@@ -35,3 +38,9 @@ class Donation(models.Model):
     pick_up_time = models.TimeField(auto_now=False)
     pick_up_comment = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+    # def get_total_quantity(self):
+    #     suma = 0
+    #     for bag in self.quantity.all():
+    #         suma += bag
+    #     return suma
