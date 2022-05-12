@@ -10,7 +10,7 @@ class LandingPageView(View):
         sum_bags = Donation.objects.aggregate(Sum('quantity'))
         sum_bags = sum_bags['quantity__sum']
         sum_institutions = Donation.objects.annotate(num_institution=Count('institution_id'))
-        sum_institutions = sum_institutions[0].num_institution
+        # sum_institutions = sum_institutions[0].num_institution
         return render(request, 'portfoliolab_app/index.html', {'sum_bags': sum_bags, 'sum_institutions': sum_institutions})
 
 
