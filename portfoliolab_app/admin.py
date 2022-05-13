@@ -1,5 +1,5 @@
 from django.contrib import admin
-from portfoliolab_app.models import Category, Institution, Donation, Account
+from portfoliolab_app.models import Account, Category, Institution, Donation
 
 from django.contrib.auth.admin import UserAdmin
 
@@ -12,6 +12,7 @@ class AccountAdmin(UserAdmin):
     filter_horizontal = ()
     list_filter = ()
     fieldsets = ()
+
 
 admin.site.register(Account, AccountAdmin)
 admin.site.register(Category)

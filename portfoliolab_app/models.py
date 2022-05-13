@@ -24,6 +24,7 @@ class MyAccountManager(BaseUserManager):
         )
         user.is_admin = True
         user.is_staff = True
+        user.is_active = True
         user.is_superuser = True
         user.save(using=self._db)
         return user
@@ -96,4 +97,4 @@ class Donation(models.Model):
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.institution.type
+        return self.institution.name
