@@ -1,59 +1,52 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 
-class MyAccountManager(BaseUserManager):
-    def create_user(self, email, username, password=None):
+class UserManager(BaseUserManager):
+    """Define a model manager for User model with no username field."""
+
+    use_in_migrations = True
+
+    def _create_user(self, email, password, **extra_fields):
+        """Create and save a User with the given email and password."""
         if not email:
-            raise ValueError('Użytkownik musi mieć poczte e-mail.')
-        if not username:
-            raise ValueError('Użytkownik musi mieć login.')
-        user = self.model(
-                email=self.normalize_email(email),
-                username=username,
-            )
+            raise ValueError('The given email must be set')
+        email = self.normalize_email(email)
+
+        user = self.model(email=email, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
-    def create_superuser(self, email, username, password):
-        user = self.create_user(
-            email=self.normalize_email(email),
-            username=username,
-            password=password,
-        )
-        user.is_admin = True
-        user.is_staff = True
-        user.is_active = True
-        user.is_superuser = True
-        user.save(using=self._db)
-        return user
+    def create_user(self, email, password=None, **extra_fields):
+        """Create and save a regular User with the given email and password."""
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(email, password, **extra_fields)
+
+    def create_superuser(self, email, password, **extra_fields):
+        """Create and save a SuperUser with the given email and password."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(email, password, **extra_fields)
 
 
-class Account(AbstractBaseUser):
-    email = models.EmailField(verbose_name='email', max_length=60, unique=True)
-    username = models.CharField(max_length=30, unique=True)
-    date_joined = models.DateTimeField(verbose_name='date_joined', auto_now_add=True)
-    last_login = models.DateTimeField(verbose_name='date_joined', auto_now=True)
-    is_admin = models.BooleanField(default=False)
-    is_active = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    hide_email = models.BooleanField(default=True)
+class Account(AbstractUser):
+        """Account model."""
 
-    objects = MyAccountManager()
+        username = None
+        email = models.EmailField(_('email address'), unique=True)
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
-
-    def __str__(self):
-        return self.username
-
-    def has_perm(self, perm, obj=None):
-        return self.is_admin
-
-    def has_module_perms(self, app_label):
-        return True
+        USERNAME_FIELD = 'email'
+        REQUIRED_FIELDS = []
+        objects = UserManager()
 
 
 class Category(models.Model):

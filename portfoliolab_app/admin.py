@@ -1,20 +1,33 @@
 from django.contrib import admin
 from portfoliolab_app.models import Account, Category, Institution, Donation
-
-from django.contrib.auth.admin import UserAdmin
-
-
-class AccountAdmin(UserAdmin):
-    list_display = ('email', 'username', 'date_joined', 'last_login', 'is_admin', 'is_staff')
-    search_fields = ('email', 'username')
-    readonly_fields = ('id', 'date_joined', 'last_login')
-
-    filter_horizontal = ()
-    list_filter = ()
-    fieldsets = ()
+from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
+from django.utils.translation import ugettext_lazy as _
+from django.contrib.auth.models import User
 
 
-admin.site.register(Account, AccountAdmin)
+@admin.register(User)
+class UserAdmin(DjangoUserAdmin):
+    """Define admin model for custom User model with no email field."""
+
+    fieldsets = (
+        (None, {'fields': ('email', 'password')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
+                                       'groups', 'user_permissions')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+    )
+    add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': ('email', 'password1', 'password2'),
+        }),
+    )
+    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    search_fields = ('email', 'first_name', 'last_name')
+    ordering = ('email',)
+
+
+admin.site.register(Account, UserAdmin)
 admin.site.register(Category)
 admin.site.register(Institution)
 admin.site.register(Donation)
