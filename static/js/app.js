@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function() {
       this.slides.forEach(slide => {
         slide.classList.remove("active");
 
-        if (slide.dataset.step == this.currentStep) {
+        if (slide.dataset.step === this.currentStep) {
           slide.classList.add("active");
         }
       });
@@ -235,7 +235,55 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
       // TODO: get data from inputs and show them in summary
-    }
+
+      if (this.currentStep == 5) {
+        const categories = document.getElementById('categories').value
+        // let institution = document.querySelectorAll('input[name="organization"]');
+        // for (const i of institution) {
+        //   if (i.checked) {
+        //     institution = i.defaultValue;
+        //     break;
+        //   }
+        const institution = document.getElementById('instytucja').value
+        const number = document.getElementById('number').value
+        const address = document.getElementById('address').value
+        const city = document.getElementById('city').value
+        const postcode = document.getElementById('postcode').value
+        const phone = document.getElementById('phone').value
+        const date = document.getElementById('date').value
+        const time = document.getElementById('time').value
+        const more_info = document.getElementById('more_info').value
+        console.log(address)
+        console.log(city)
+        console.log(postcode)
+        console.log(phone)
+        console.log(date)
+        console.log(time)
+        console.log(more_info)
+        console.log(institution)
+        console.log(number)
+        console.log(categories)
+
+        const div1 = document.getElementById('droga')
+        const div2 = document.getElementById('miasto')
+        const div3 = document.getElementById('kod')
+        const div4 = document.getElementById('telefon')
+        const div5 = document.getElementById('data')
+        const div6 = document.getElementById('czas')
+        const div7 = document.getElementById('uwagi')
+        const div8 = document.getElementById('worki')
+        const div9 = document.getElementById('instytucja')
+
+          div1.innerText = address
+          div2.innerText = city
+          div3.innerText = postcode
+          div4.innerText = phone
+          div5.innerText = date.toString()
+          div6.innerText = time
+          div7.innerText = more_info
+          div8.innerText = number
+          div9.innerText = institution
+      }}
 
     /**
      * Submit form
@@ -253,3 +301,20 @@ document.addEventListener("DOMContentLoaded", function() {
     new FormSteps(form);
   }
 });
+
+
+// fetch('/add_donation/', {
+//         method: 'POST',
+//         headers: {
+//       'Accept': 'application/json',
+//       'Content-type': 'application/json',
+//     },
+//         body: JSON.stringify(data),
+//       })
+//       .then(response => response.json())
+//       .then(data => {
+//         console.log('Success:', data);
+//       })
+//       .catch((error) => {
+//         console.error('Error:', error);
+//       });

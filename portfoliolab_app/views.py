@@ -24,4 +24,5 @@ class LandingPageView(View):
 class AddDonationView(LoginRequiredMixin, View):
     def get(self, request):
         categories = Category.objects.all()
-        return render(request, 'portfoliolab_app/form.html', {'categories': categories})
+        institutions = Institution.objects.all()
+        return render(request, 'portfoliolab_app/form.html', {'categories': categories, 'institutions': institutions})
