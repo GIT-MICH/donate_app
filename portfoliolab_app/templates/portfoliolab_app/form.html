@@ -73,7 +73,7 @@
             {% for category in categories %}
               <div class="form-group form-group--checkbox">
                   <label>
-                      <input type="checkbox" name="{{ category.name }}" value="{{ category.pk }}"/>
+                      <input type="checkbox" name="categories" value="{{ category.pk }}"/>
                       <span class="checkbox"></span>
                       <span class="description">{{ category.name }}</span>
                   </label>
@@ -92,7 +92,7 @@
             <div class="form-group form-group--inline">
               <label>
                 Liczba 60l worków:
-                <input type="number" name="bags" step="1" min="1" id="number"/>
+                <input type="number" name="bags" step="1" min="1" id="bags"/>
               </label>
             </div>
 
@@ -110,7 +110,7 @@
             {% for institution in institutions %}
             <div class="form-group form-group--checkbox">
               <label>
-                <input type="radio" name="organization" value="{{ institution.name }}" id="{{ institution.id }}"/>
+                <input type="radio" name="organization" value="{{ institution.name }}"/>
                 <span class="checkbox radio"></span>
                 <span class="description">
                   <div class="title">{{ institution.name }}</div>
@@ -128,7 +128,7 @@
 
           <!-- STEP 5 -->
           <div data-step="4">
-            <h3>Podaj adres oraz termin odbioru rzecz przez kuriera:</h3>
+            <h3>Podaj adres oraz termin odbioru rzeczy przez kuriera:</h3>
 
             <div class="form-section form-section--columns">
               <div class="form-section--column">
@@ -167,7 +167,7 @@
                 <div class="form-group form-group--inline">
                   <label>
                     Uwagi dla kuriera
-                    <textarea name="more_info" rows="5" id="more_info"></textarea>
+                    <textarea name="more_info" rows="5" id="info"> </textarea>
                   </label>
                 </div>
               </div>
@@ -186,19 +186,15 @@
               <div class="form-section">
                 <h4>Oddajesz:</h4>
                 <ul>
-                  <li>
-                    <span class="icon icon-bag"></span>
-                    <span class="summary--text" id="worki"
-                      > worki ubrań w dobrym stanie dla dzieci</span
-                    >
-                  </li>
+                    <li>
+                        <span class="icon icon-bag"></span>
+                        <span id="bags2" class="summary--text"></span>
+                    </li>
 
-                  <li>
-                    <span class="icon icon-hand"></span>
-                    <span class="summary--text" id="instytucja"
-                      >Dla </span
-                    >
-                  </li>
+                    <li>
+                        <span class="icon icon-hand"></span>
+                        <span id="organization2" class="summary--text"></span>
+                    </li>
                 </ul>
               </div>
 
@@ -206,21 +202,22 @@
                 <div class="form-section--column">
                   <h4>Adres odbioru:</h4>
                   <ul>
-                    <li id="ulica"></li>
-                    <li id="miasto"></li>
-                    <li id="kod"></li>
-                    <li id="telefon"></li>
+                    <li><span id="address2" class="summary--text"></span></li>
+                    <li><span id="city2" class="summary--text"></span></li>
+                    <li><span id="postcode2" class="summary--text"></span></li>
+                    <li><span id="phone2" class="summary--text"></span></li>
                   </ul>
                 </div>
 
                 <div class="form-section--column">
                   <h4>Termin odbioru:</h4>
                   <ul>
-                    <li id="data"></li>
-                    <li id="czas"></li>
-                    <li id="uwagi"></li>
+                    <li><span id="date2" class="summary--text"></span></li>
+                    <li><span id="time2" class="summary--text"></span></li>
+                    <li><span id="info2" class="summary--text"></span></li>
                   </ul>
                 </div>
+
               </div>
             </div>
 
