@@ -7,7 +7,9 @@
                 <li class="logged-user">
                     Witaj <strong>{{ user.first_name }}</strong>
                     <ul class="dropdown">
-                        <li><a href="#">Profil</a></li>
+                        {% if user.is_superuser %}
+                        <li><a href="/admin/">Profil</a></li>
+                        {% endif %}
                         <li><a href="#">Ustawienia</a></li>
                         <li><a href="{% url 'logout' %}">Wyloguj</a></li>
                     </ul>
@@ -67,6 +69,7 @@
         <div class="form--steps-counter">Krok <span>1</span>/5</div>
 
         <form action="form-confirmation.html" method="post">
+        {% csrf_token %}
           <!-- STEP 1: class .active is switching steps -->
           <div data-step="1" class="active">
             <h3>Zaznacz co chcesz oddać:</h3>

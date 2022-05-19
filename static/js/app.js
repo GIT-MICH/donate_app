@@ -318,14 +318,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // fetch(zbiera info i wysyła do backend pod adres gdzie POST) class FormData w JS
 
-
           fetch('/add_donation/', {
               method: 'POST',
+              body: JSON.stringify('test json'),
               headers: {
-                  'Accept': 'application/json',
-                  'Content-type': 'application/json',
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json; charset=UTF-8',
               },
-              body: JSON.stringify(data),
+              credentials: "same-origin"
+
           })
               .then(response => response.json())
               .then(data => {
@@ -342,3 +343,31 @@ document.addEventListener("DOMContentLoaded", function () {
         new FormSteps(form);
     }
 });
+
+
+/////zadanie/////
+
+// document.querySelector('button').addEventListener('click', function(event){
+//     event.preventDefault()
+//     const isbn = document.querySelector('.form-control')
+//     const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn.value}`;
+//     fetch(url).then( resp => {
+//     return resp.json();
+//     }).then( obj => {
+//         console.log(obj)
+//         const h2_element = document.createElement('h2')
+//         h2_element.innerText = obj.items[0].volumeInfo.title;
+//
+// const ul = document.querySelector('.list')
+// const url = `https://pokeapi.co/api/v2/pokemon`;
+//     fetch(url).then( resp => {
+//     return resp.json();
+//     }).then( obj => {
+//         obj.results.forEach(element => {
+//         const new_li = document.createElement('li')
+//             new_li.innerText = element.name
+//             ul.appendChild(new_li)
+//         });
+//     }).catch( error => {
+//         console.log('Nie mozna pobrać pokemonów;', error)
+//     })
