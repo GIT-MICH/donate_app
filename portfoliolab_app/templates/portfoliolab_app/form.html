@@ -68,7 +68,8 @@
       <div class="form--steps-container">
         <div class="form--steps-counter">Krok <span>1</span>/5</div>
 
-        <form action="form-confirmation.html" method="post">
+        <form action="" method="post">
+{#        <form action="form-confirmation.html" method="post">#}
         {% csrf_token %}
           <!-- STEP 1: class .active is switching steps -->
           <div data-step="1" class="active">
@@ -104,8 +105,6 @@
               <button type="button" class="btn next-step">Dalej</button>
             </div>
           </div>
-
-
 
           <!-- STEP 4 -->
           <div data-step="3">
@@ -212,22 +211,28 @@
                   </ul>
                 </div>
 
-                <div class="form-section--column">
-                  <h4>Termin odbioru:</h4>
-                  <ul>
-                    <li><span id="date2" class="summary--text"></span></li>
-                    <li><span id="time2" class="summary--text"></span></li>
-                    <li><span id="info2" class="summary--text"></span></li>
-                  </ul>
-                </div>
+                  <div class="form-section--column">
+                      <h4>Termin odbioru:</h4>
+                      <ul>
+                          <li><span id="date2" class="summary--text"></span></li>
+                          <li><span id="time2" class="summary--text"></span></li>
+                          <li><span id="info2" class="summary--text"></span></li>
+                      </ul>
+                  </div>
 
               </div>
             </div>
 
-            <div class="form-group form-group--buttons">
-              <button type="button" class="btn prev-step">Wstecz</button>
-              <button type="submit" class="btn">Potwierdzam</button>
-            </div>
+              <div class="form-group form-group--buttons">
+                  <script>
+                      function newLocation() {
+                          window.location.href = "/confirmation/";
+                      }
+                  </script>
+                  <button type="button" class="btn prev-step">Wstecz</button>
+                  <button type="submit" onclick="newLocation()" class="btn">Potwierdzam</button>
+
+              </div>
           </div>
         </form>
       </div>

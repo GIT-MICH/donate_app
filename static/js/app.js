@@ -275,11 +275,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
       let bags = document.getElementById("bags");
-      // let cat = document.getElementById("categories");
           document.querySelector("#bags2").innerText = bags.value
-          // document.querySelector("#bags2").innerText = bags.value; //+ ' worki z: ' + cat.value;
 
-      let organization = document.querySelector('input[name="organization"]');
+      let organization = document.querySelector('input[name="organization"]:checked');
           document.querySelector("#organization2").innerText = organization.value;
 
       let address = document.getElementById("address");
@@ -323,7 +321,7 @@ document.addEventListener("DOMContentLoaded", function () {
               body: JSON.stringify('test json'),
               headers: {
                   Accept: 'application/json',
-                  'Content-Type': 'application/json; charset=UTF-8',
+                  // 'Content-Type': 'application/json; charset=UTF-8',
               },
               credentials: "same-origin"
 

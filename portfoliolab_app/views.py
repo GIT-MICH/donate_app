@@ -26,3 +26,8 @@ class AddDonationView(LoginRequiredMixin, View):
         categories = Category.objects.all()
         institutions = Institution.objects.all()
         return render(request, 'portfoliolab_app/form.html', {'categories': categories, 'institutions': institutions})
+
+
+class ConfirmationView(View):
+    def get(self, request):
+        return render(request, 'portfoliolab_app/form-confirmation.html')
