@@ -4,6 +4,7 @@ from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.db.models import Sum, Count
 
+from portfoliolab_app.forms import DonationModelForm
 from portfoliolab_app.models import Donation, Institution, Account, Category
 
 
@@ -23,11 +24,26 @@ class LandingPageView(View):
 
 class AddDonationView(LoginRequiredMixin, View):
     def get(self, request):
+        form = DonationModelForm()
         categories = Category.objects.all()
         institutions = Institution.objects.all()
-        return render(request, 'portfoliolab_app/form.html', {'categories': categories, 'institutions': institutions})
+        return render(request, 'portfoliolab_app/form.html', {'categories': categories, 'institutions': institutions, 'form': form})
+
+    def post(self, request):
+        form = DonationModelForm(request.POST)
+        if form.is_valid():
+            donation = form.save(commit=False)
+            donation.user = request.user
+            donation.save()
+            return redirect('confirmation')
+        return render(request, 'portfoliolab_app/form.html', {'form': form})
 
 
 class ConfirmationView(View):
     def get(self, request):
         return render(request, 'portfoliolab_app/form-confirmation.html')
+
+
+class UserPageView(View):
+    def get(self, request):
+        return render(request, 'portfoliolab_app/user-page.html')

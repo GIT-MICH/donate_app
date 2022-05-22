@@ -1,6 +1,6 @@
 from django import forms
 
-from portfoliolab_app.models import Institution, Account
+from portfoliolab_app.models import Institution, Account, Donation
 
 
 class DonationForm(forms.Form):
@@ -16,3 +16,12 @@ class DonationForm(forms.Form):
     pick_up_comment = forms.CharField(widget=forms.Textarea)#, default='Brak uwag') #(default='Brak uwag')
     user = forms.ModelChoiceField(queryset=Account.objects.all())
 #   default_data = {'pick_up_comment': 'Brak uwag'}
+
+
+class DonationModelForm(forms.ModelForm):
+    class Meta:
+        model = Donation
+        exclude = ['user']
+        widgets = {
+            'pick_up_date': forms.SelectDateWidget()
+        }

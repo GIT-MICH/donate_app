@@ -274,28 +274,28 @@ document.addEventListener("DOMContentLoaded", function () {
           // TODO: get data from inputs and show them in summary
 
 
-      let bags = document.getElementById("bags");
-          document.querySelector("#bags2").innerText = bags.value
+      let bags = document.querySelector('input[name="bags"]');
+          document.querySelector("#bags2").innerText = bags.value;
 
       let organization = document.querySelector('input[name="organization"]:checked');
           document.querySelector("#organization2").innerText = organization.value;
 
-      let address = document.getElementById("address");
+      let address = document.querySelector('input[name="address"]');
           document.querySelector("#address2").innerText = address.value;
 
-      let city = document.getElementById("city");
+      let city = document.querySelector('input[name="city"]');
           document.querySelector("#city2").innerText = city.value;
 
-      let postcode = document.getElementById("postcode");
+      let postcode = document.querySelector('input[name="postcode"]');
           document.querySelector("#postcode2").innerText = postcode.value;
 
-      let phone = document.getElementById("phone");
+      let phone = document.querySelector('input[name="phone"]');
           document.querySelector("#phone2").innerText = phone.value;
 
-      let date = document.getElementById("date");
+      let date = document.querySelector('input[name="date"]');
           document.querySelector("#date2").innerText = date.value;
 
-      let time = document.getElementById("time");
+      let time = document.querySelector('input[name="time"]');
           document.querySelector("#time2").innerText = time.value;
 
       let comment = document.getElementById("info");
@@ -316,19 +316,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // fetch(zbiera info i wysyła do backend pod adres gdzie POST) class FormData w JS
 
+
           fetch('/add_donation/', {
               method: 'POST',
-              body: JSON.stringify('test json'),
               headers: {
-                  Accept: 'application/json',
-                  // 'Content-Type': 'application/json; charset=UTF-8',
+                  // Accept: 'application/json',
+                  'Content-type': 'application/json; charset=UTF-8',
+              body: JSON.stringify({
+                  quantity: bags,
+                  // categories:
+                  institution: organization,
+                  address: address,
+                  phone_number: phone,
+                  city: city,
+                  zip_code: postcode,
+                  pick_up_date: date,
+                  pick_up_time: time,
+                  pick_up_comment: comment
+                // user:
+              }),
               },
-              credentials: "same-origin"
 
           })
               .then(response => response.json())
-              .then(data => {
-                  console.log('Success:', data);
+              .then(json => {
+                  console.log('Success:', json);
               })
 
               .catch((error) => {
@@ -341,31 +353,3 @@ document.addEventListener("DOMContentLoaded", function () {
         new FormSteps(form);
     }
 });
-
-
-/////zadanie/////
-
-// document.querySelector('button').addEventListener('click', function(event){
-//     event.preventDefault()
-//     const isbn = document.querySelector('.form-control')
-//     const url = `https://www.googleapis.com/books/v1/volumes?q=isbn:${isbn.value}`;
-//     fetch(url).then( resp => {
-//     return resp.json();
-//     }).then( obj => {
-//         console.log(obj)
-//         const h2_element = document.createElement('h2')
-//         h2_element.innerText = obj.items[0].volumeInfo.title;
-//
-// const ul = document.querySelector('.list')
-// const url = `https://pokeapi.co/api/v2/pokemon`;
-//     fetch(url).then( resp => {
-//     return resp.json();
-//     }).then( obj => {
-//         obj.results.forEach(element => {
-//         const new_li = document.createElement('li')
-//             new_li.innerText = element.name
-//             ul.appendChild(new_li)
-//         });
-//     }).catch( error => {
-//         console.log('Nie mozna pobrać pokemonów;', error)
-//     })

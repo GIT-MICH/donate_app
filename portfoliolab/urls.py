@@ -16,12 +16,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-from portfoliolab_app.views import LandingPageView, AddDonationView, ConfirmationView
+from portfoliolab_app.views import ( LandingPageView,
+                                     AddDonationView,
+                                     ConfirmationView,
+                                     UserPageView
+                                     )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', LandingPageView.as_view(), name='landing-page'),
     path('add_donation/', AddDonationView.as_view(), name='add-donation'),
     path('confirmation/', ConfirmationView.as_view(), name='confirmation'),
+    path('user/', UserPageView.as_view(), name='user-page'),
     path('accounts/', include('accounts.urls'))
 ]

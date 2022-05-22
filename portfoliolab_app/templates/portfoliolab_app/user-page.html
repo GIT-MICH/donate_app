@@ -5,7 +5,7 @@
         <nav class="container container--70">
             <ul class="nav--actions">
                 <li class="logged-user">
-                  Witaj {{ user.first_name }}
+                    Witaj {{ user.first_name }}
                     <ul class="dropdown">
                         {% if user.is_superuser %}
                             <li><a href="/admin/">Strona administratora</a></li>
@@ -20,13 +20,12 @@
             </ul>
             {% include 'portfoliolab_app/nav_bar.html' %}
         </nav>
-
-        <div class="slogan container container--90">
-            <h2>
-                Dziękujemy za przesłanie formularza. Na maila prześlemy wszelkie
-                informacje o odbiorze.
-            </h2>
-        </div>
+        <h2>
+            Twój profil
+        </h2>
+        <h1 style="text-align: center"> Imię: {{ user.first_name }}</h1>
+        <h1 style="text-align: center"> Nazwisko: {{ user.last_name }}</h1>
+        <h1 style="text-align: center"> e-mail: {{ user.email }}</h1>
     </header>
     </body>
 {% endblock %}

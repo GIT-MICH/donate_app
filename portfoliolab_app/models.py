@@ -52,6 +52,10 @@ class Account(AbstractUser):
 class Category(models.Model):
     name = models.CharField(max_length=128, verbose_name='Kategoria')
 
+    class Meta:
+        verbose_name = 'Kategoria'
+        verbose_name_plural = 'Kategorie'
+
     def __str__(self):
         return self.name
 
@@ -72,6 +76,10 @@ class Institution(models.Model):
     type = models.CharField(max_length=32, choices=TYPES, default=FUNDACJA)
     categories = models.ManyToManyField(Category)
 
+    class Meta:
+        verbose_name = 'Instytucja'
+        verbose_name_plural = 'Instytucje'
+
     def __str__(self):
         return self.name
 
@@ -88,6 +96,10 @@ class Donation(models.Model):
     pick_up_time = models.TimeField(auto_now=False)
     pick_up_comment = models.TextField()
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+
+    class Meta:
+        verbose_name = 'Darowizna'
+        verbose_name_plural = 'Darowizny'
 
     def __str__(self):
         return self.institution.name
