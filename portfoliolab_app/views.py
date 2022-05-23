@@ -4,6 +4,10 @@ from django.shortcuts import render, reverse, redirect
 from django.views import View
 from django.db.models import Sum, Count
 
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
+
 from portfoliolab_app.forms import DonationModelForm
 from portfoliolab_app.models import Donation, Institution, Account, Category
 
@@ -24,10 +28,9 @@ class LandingPageView(View):
 
 class AddDonationView(LoginRequiredMixin, View):
     def get(self, request):
-        form = DonationModelForm()
         categories = Category.objects.all()
         institutions = Institution.objects.all()
-        return render(request, 'portfoliolab_app/form.html', {'categories': categories, 'institutions': institutions, 'form': form})
+        return render(request, 'portfoliolab_app/form.html', {'categories': categories, 'institutions': institutions})
 
     def post(self, request):
         form = DonationModelForm(request.POST)
@@ -47,3 +50,8 @@ class ConfirmationView(View):
 class UserPageView(View):
     def get(self, request):
         return render(request, 'portfoliolab_app/user-page.html')
+
+
+# @method_decorator(login_required, name='dispatch')
+# class ProtectedView(TemplateView):
+#     template_name = 'portfoliolab_app/form.html'

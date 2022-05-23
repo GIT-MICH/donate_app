@@ -273,34 +273,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // TODO: get data from inputs and show them in summary
 
+if (this.currentStep == 5) {
 
-      let bags = document.querySelector('input[name="bags"]');
+    let bags = document.querySelector('input[name="bags"]');
           document.querySelector("#bags2").innerText = bags.value;
 
-      let organization = document.querySelector('input[name="organization"]:checked');
-          document.querySelector("#organization2").innerText = organization.value;
+          let organization = document.querySelector('input[name="organization"]:checked').value;
+          document.querySelector("#organization2").innerText = organization;
 
-      let address = document.querySelector('input[name="address"]');
+          let address = document.querySelector('input[name="address"]');
           document.querySelector("#address2").innerText = address.value;
 
-      let city = document.querySelector('input[name="city"]');
+          let city = document.querySelector('input[name="city"]');
           document.querySelector("#city2").innerText = city.value;
 
-      let postcode = document.querySelector('input[name="postcode"]');
+          let postcode = document.querySelector('input[name="postcode"]');
           document.querySelector("#postcode2").innerText = postcode.value;
 
-      let phone = document.querySelector('input[name="phone"]');
+          let phone = document.querySelector('input[name="phone"]');
           document.querySelector("#phone2").innerText = phone.value;
 
-      let date = document.querySelector('input[name="date"]');
+          let date = document.querySelector('input[name="date"]');
           document.querySelector("#date2").innerText = date.value;
 
-      let time = document.querySelector('input[name="time"]');
+          let time = document.querySelector('input[name="time"]');
           document.querySelector("#time2").innerText = time.value;
 
-      let comment = document.getElementById("info");
+          let comment = document.getElementById("info");
           document.querySelector("#info2").innerText = comment.value;
-
+      }
       }
 
       /**
@@ -314,29 +315,32 @@ document.addEventListener("DOMContentLoaded", function () {
           this.currentStep++;
           this.updateForm();
 
-          // fetch(zbiera info i wysyła do backend pod adres gdzie POST) class FormData w JS
 
+          let data = new FormData(document.querySelector('#donation_form'))
+
+          function getCookie(name) {
+              let cookieValue = null;
+              if (document.cookie && document.cookie !== '') {
+                  const cookies = document.cookie.split(';');
+                  for (let i = 0; i < cookies.length; i++) {
+                      const cookie = cookies[i].trim();
+                      // Does this cookie string begin with the name we want?
+                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                          break;
+                      }
+                  }
+              }
+              return cookieValue;
+          }
+
+          const csrftoken = getCookie('csrftoken');
 
           fetch('/add_donation/', {
               method: 'POST',
-              headers: {
-                  // Accept: 'application/json',
-                  'Content-type': 'application/json; charset=UTF-8',
-              body: JSON.stringify({
-                  quantity: bags,
-                  // categories:
-                  institution: organization,
-                  address: address,
-                  phone_number: phone,
-                  city: city,
-                  zip_code: postcode,
-                  pick_up_date: date,
-                  pick_up_time: time,
-                  pick_up_comment: comment
-                // user:
-              }),
-              },
-
+              body: data,
+              headers: {'X-CSRFToken': csrftoken},
+              mode: 'same-origin'
           })
               .then(response => response.json())
               .then(json => {

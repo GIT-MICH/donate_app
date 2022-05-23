@@ -1,11 +1,11 @@
 from django import forms
 
-from portfoliolab_app.models import Institution, Account, Donation
+from portfoliolab_app.models import Institution, Account, Donation, Category
 
 
 class DonationForm(forms.Form):
     quantity = forms.IntegerField()
-    # categories = forms.MultipleChoiceField(Category, widget=forms.CheckboxSelectMultiple),
+    categories = forms.MultipleChoiceField(choices=Category, widget=forms.CheckboxSelectMultiple),
     institution = forms.ModelChoiceField(queryset=Institution.objects.all())
     phone_number = forms.CharField(max_length=20)
     address = forms.CharField(max_length=20)

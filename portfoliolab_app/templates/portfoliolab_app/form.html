@@ -1,6 +1,6 @@
 {% extends 'portfoliolab_app/base.html' %}
 {% block content %}
-    {% csrf_token %}
+    {%  csrf_token %}
     <body>
     <header class="header--form-page">
         <nav class="container container--70">
@@ -72,8 +72,8 @@
         <div class="form--steps-container">
             <div class="form--steps-counter">Krok <span>1</span>/5</div>
 
-            <form method="post">
-                {#        <form action="form-confirmation.html" method="post">#}
+            <form method="post" id="donation_form">
+                {{ csrf_input }}
 
                 <!-- STEP 1: class .active is switching steps -->
                 <div data-step="1" class="active">
@@ -223,9 +223,6 @@
                                     <li><span id="info2" class="summary--text"></span></li>
                                 </ul>
                             </div>
-
-{#                            {{ form.as_p }}#}
-
                         </div>
                     </div>
 
