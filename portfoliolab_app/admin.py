@@ -27,7 +27,20 @@ class UserAdmin(DjangoUserAdmin):
     ordering = ('email',)
 
 
+def is_taken(model_admin, request, query_set):
+    query_set.update(is_taken=True)
+
+
+is_taken.short_description = 'Dar został odebrany !'
+
+
+@admin.register(Donation)
+class DonationAdmin(admin.ModelAdmin):
+    actions = [is_taken, ]
+    list_display = ('quantity', 'institution', 'phone_number', 'pick_up_date', 'is_taken')
+
+
 admin.site.register(Account, UserAdmin)
 admin.site.register(Category)
 admin.site.register(Institution)
-admin.site.register(Donation)
+

@@ -19,7 +19,8 @@ from django.urls import path, include
 from portfoliolab_app.views import ( LandingPageView,
                                      AddDonationView,
                                      ConfirmationView,
-                                     UserPageView
+                                     UserPageView,
+                                     UserPageDetailView
                                      )
 
 urlpatterns = [
@@ -28,5 +29,6 @@ urlpatterns = [
     path('add_donation/', AddDonationView.as_view(), name='add-donation'),
     path('confirmation/', ConfirmationView.as_view(), name='confirmation'),
     path('user/', UserPageView.as_view(), name='user-page'),
+    path('user/<int:donation_id>/', UserPageDetailView.as_view(), name='user-detail'),
     path('accounts/', include('accounts.urls'))
 ]

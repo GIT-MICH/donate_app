@@ -21,7 +21,7 @@ class DonationForm(forms.Form):
 class DonationModelForm(forms.ModelForm):
     class Meta:
         model = Donation
-        exclude = ['user']
+        exclude = ['user', 'categories']
         widgets = {
             'pick_up_date': forms.SelectDateWidget()
         }

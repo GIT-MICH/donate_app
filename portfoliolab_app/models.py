@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
 from django.db import models
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 
@@ -85,17 +86,18 @@ class Institution(models.Model):
 
 
 class Donation(models.Model):
-    quantity = models.IntegerField()
+    quantity = models.IntegerField(verbose_name='Ilośc worków')
     categories = models.ManyToManyField(Category)
-    institution = models.ForeignKey(Institution, on_delete=models.CASCADE)
+    institution = models.ForeignKey(Institution, on_delete=models.CASCADE, verbose_name='Instytucja')
     address = models.CharField(max_length=256)
-    phone_number = models.IntegerField()
+    phone_number = models.IntegerField(verbose_name='Nr tel.')
     city = models.CharField(max_length=32)
     zip_code = models.CharField(max_length=5)
-    pick_up_date = models.DateField()
+    pick_up_date = models.DateField(verbose_name='Data odbioru')
     pick_up_time = models.TimeField(auto_now=False)
-    pick_up_comment = models.TextField()
+    pick_up_comment = models.TextField(blank=True)
     user = models.ForeignKey(Account, on_delete=models.CASCADE, null=True)
+    is_taken = models.BooleanField(default=False, verbose_name='Czy odebrano?')
 
     class Meta:
         verbose_name = 'Darowizna'
@@ -103,3 +105,6 @@ class Donation(models.Model):
 
     def __str__(self):
         return self.institution.name
+
+    def get_absolute_url(self):
+        return reverse('user-detail', args=(self.id,))

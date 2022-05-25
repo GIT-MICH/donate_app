@@ -20,12 +20,58 @@
             </ul>
             {% include 'portfoliolab_app/nav_bar.html' %}
         </nav>
-        <h2>
-            Twój profil
-        </h2>
-        <h1 style="text-align: center"> Imię: {{ user.first_name }}</h1>
-        <h1 style="text-align: center"> Nazwisko: {{ user.last_name }}</h1>
-        <h1 style="text-align: center"> e-mail: {{ user.email }}</h1>
+        <br>
+        <h2 style="text-align: center">Dane Twojego konta:</h2>
+        <h3 style="text-align: center">Imię: {{ user.first_name }} </h3>
+        <h3 style="text-align: center">Nazwisko: {{ user.last_name }}</h3>
+        <h3 style="text-align: center">e-mail: {{ user.email }}</h3>
+        <br>
+
+        <section class="form--steps">
+            <div class="form--steps-container">
+                <div style="font-size: small">
+
+                    Lista przekazanych przez Ciebie darów:
+
+                    {% for donation in user_donations %}
+                        {% if donation.is_taken == False %}
+                            <p class="summary" style="font-size: large">
+                                <label>- Kiedy: {{ donation.pick_up_date }} o godz. {{ donation.pick_up_time }}</label>
+                                <br><label>- Ilość worków: {{ donation.quantity }}</label>
+                                <br><label>-
+                                Zawartość: {{ donation.institution.categories.get_queryset|join:", " }}</label>
+                                <br><label>- Odbiorca: {{ donation.institution }}"</label><br>
+                            </p>
+                                Czy dar został już zabrany?
+                                <br><br>
+                                <form method="get" action="/user/{{ donation.id }}">
+                                    <button type="submit" style="color: darkolivegreen">Tak, został odebrany</button>
+                                </form>
+                        {% endif %}
+                    {% endfor %}
+
+                    <br><br>_____________________________________________<br><br>
+
+                    Dary które zostały już zabrane (archiwum):
+
+                    {% for donation in user_donations %}
+                        {% if donation.is_taken == True %}
+                            <p class="summary" style="color:lightslategray; font-size: small">
+                                <label>- Kiedy: {{ donation.pick_up_date }} o godz. {{ donation.pick_up_time }}</label>
+                                <br><label>- Ilość worków: {{ donation.quantity }}</label>
+                                <br><label>-
+                                Zawartość: {{ donation.institution.category.get_queryset|join:", " }}</label>
+                                <br><label>- Odbiorca: {{ donation.institution.get_type_display }}
+                                "{{ donation.institution }}"</label><br>
+                            </p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
     </header>
     </body>
+{% endblock %}
+
+{% block footer %}
 {% endblock %}

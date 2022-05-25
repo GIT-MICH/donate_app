@@ -273,35 +273,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // TODO: get data from inputs and show them in summary
 
-if (this.currentStep == 5) {
+          if (this.currentStep == 5) {
 
-    let bags = document.querySelector('input[name="bags"]');
-          document.querySelector("#bags2").innerText = bags.value;
+              let bags = document.querySelector('input[name="quantity"]');
+              document.querySelector("#bags2").innerText = bags.value;
 
-          let organization = document.querySelector('input[name="organization"]:checked').value;
-          document.querySelector("#organization2").innerText = organization;
+              let organization = document.querySelector('input[name="institution"]:checked');
+              document.querySelector("#organization2").innerText = organization.id;
 
-          let address = document.querySelector('input[name="address"]');
-          document.querySelector("#address2").innerText = address.value;
+              let address = document.querySelector('input[name="address"]');
+              document.querySelector("#address2").innerText = address.value;
 
-          let city = document.querySelector('input[name="city"]');
-          document.querySelector("#city2").innerText = city.value;
+              let city = document.querySelector('input[name="city"]');
+              document.querySelector("#city2").innerText = city.value;
 
-          let postcode = document.querySelector('input[name="postcode"]');
-          document.querySelector("#postcode2").innerText = postcode.value;
+              let postcode = document.querySelector('input[name="zip_code"]');
+              document.querySelector("#postcode2").innerText = postcode.value;
 
-          let phone = document.querySelector('input[name="phone"]');
-          document.querySelector("#phone2").innerText = phone.value;
+              let phone = document.querySelector('input[name="phone_number"]');
+              document.querySelector("#phone2").innerText = phone.value;
 
-          let date = document.querySelector('input[name="date"]');
-          document.querySelector("#date2").innerText = date.value;
+              let date = document.querySelector('input[name="pick_up_date"]');
+              document.querySelector("#date2").innerText = date.value;
 
-          let time = document.querySelector('input[name="time"]');
-          document.querySelector("#time2").innerText = time.value;
+              let time = document.querySelector('input[name="pick_up_time"]');
+              document.querySelector("#time2").innerText = time.value;
 
-          let comment = document.getElementById("info");
-          document.querySelector("#info2").innerText = comment.value;
-      }
+              let comment = document.getElementById("pick_up_comment");
+              document.querySelector("#info2").innerText = comment.value;
+          }
       }
 
       /**
@@ -316,7 +316,7 @@ if (this.currentStep == 5) {
           this.updateForm();
 
 
-          let data = new FormData(document.querySelector('#donation_form'))
+          let data = new FormData(document.getElementById('donation_form'))
 
           function getCookie(name) {
               let cookieValue = null;
@@ -324,7 +324,6 @@ if (this.currentStep == 5) {
                   const cookies = document.cookie.split(';');
                   for (let i = 0; i < cookies.length; i++) {
                       const cookie = cookies[i].trim();
-                      // Does this cookie string begin with the name we want?
                       if (cookie.substring(0, name.length + 1) === (name + '=')) {
                           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
                           break;
@@ -333,14 +332,14 @@ if (this.currentStep == 5) {
               }
               return cookieValue;
           }
+          let csrftoken = getCookie('csrftoken');
 
-          const csrftoken = getCookie('csrftoken');
-
-          fetch('/add_donation/', {
+          let response = fetch('/add_donation/', {
               method: 'POST',
               body: data,
-              headers: {'X-CSRFToken': csrftoken},
-              mode: 'same-origin'
+              // headers: {'X-CSRFToken': csrftoken},
+              credentials: 'same-origin',
+
           })
               .then(response => response.json())
               .then(json => {

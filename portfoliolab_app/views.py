@@ -49,9 +49,26 @@ class ConfirmationView(View):
 
 class UserPageView(View):
     def get(self, request):
-        return render(request, 'portfoliolab_app/user-page.html')
+        user = request.user
+        user_donations = Donation.objects.filter(user=user)
+        return render(request, 'portfoliolab_app/user-page.html', {'user_donations': user_donations})
+
+    def post(self, request):
+        user = request.user
+        user_donations = Donation.objects.filter(user=user)
+        return render(request, 'portfoliolab_app/user-page.html', {'user_donations': user_donations})
 
 
-# @method_decorator(login_required, name='dispatch')
-# class ProtectedView(TemplateView):
-#     template_name = 'portfoliolab_app/form.html'
+class UserPageDetailView(View):
+    def get(self, request, donation_id):
+        user = request.user
+        user_donations = Donation.objects.filter(user=user)
+        donation_to_update = Donation.objects.get(id=donation_id)
+        donation_to_update.is_taken = True
+        donation_to_update.save()
+        return render(request, 'portfoliolab_app/user-page.html', {'user_donations': user_donations, 'donation_to_update': donation_to_update})
+
+
+@method_decorator(login_required, name='dispatch')
+class ProtectedView(TemplateView):
+    template_name = 'portfoliolab_app/form.html'
