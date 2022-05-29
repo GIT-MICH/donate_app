@@ -109,8 +109,8 @@
                     </div>
                 </div>
 
-                <!-- STEP 4 -->
-                <div data-step="3">
+                <!-- STEP 3 -->
+                <div data-step="3" class="active">
                     <h3>Wybierz organizację, której chcesz pomóc:</h3>
                     {% for institution in institutions %}
                         <div class="form-group form-group--checkbox">
@@ -131,7 +131,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 5 -->
+                <!-- STEP 4 -->
                 <div data-step="4">
                     <h3>Podaj adres oraz termin odbioru rzeczy przez kuriera:</h3>
 
@@ -183,7 +183,7 @@
                     </div>
                 </div>
 
-                <!-- STEP 6 -->
+                <!-- STEP 5 -->
                 <div data-step="5">
                     <h3>Podsumowanie Twojej darowizny</h3>
 
@@ -226,13 +226,8 @@
                     </div>
 
                     <div class="form-group form-group--buttons">
-                        <script>
-                            function newLocation() {
-                                window.location.href = "/confirmation/";
-                            }
-                        </script>
                         <button type="button" class="btn prev-step">Wstecz</button>
-                        <button type="submit" onclick="newLocation()" class="btn">Potwierdzam</button>
+                        <button type="submit" class="btn">Potwierdzam</button>
 
                     </div>
                 </div>

@@ -18,7 +18,7 @@ class LandingPageView(View):
         institutions_choice_org = Institution.objects.filter(type='organizacja pozarządowa')
         institutions_choice_zbi = Institution.objects.filter(type='zbiórka lokalna')
         sum_bags = Donation.objects.aggregate(Sum('quantity'))['quantity__sum']
-        institutions_supported = Donation.objects.aggregate(Count('institution'))['institution__count']
+        institutions_supported = Donation.objects.aggregate(Count('institution', distinct=True))['institution__count']
         return render(request, 'portfoliolab_app/index.html',
                       {'institutions_choice_fund': institutions_choice_fund,
                        'institutions_choice_org': institutions_choice_org,
@@ -35,9 +35,11 @@ class AddDonationView(LoginRequiredMixin, View):
     def post(self, request):
         form = DonationModelForm(request.POST)
         if form.is_valid():
+            # breakpoint()
             donation = form.save(commit=False)
             donation.user = request.user
             donation.save()
+            # donation.save_m2m()
             return redirect('confirmation')
         return render(request, 'portfoliolab_app/form.html', {'form': form})
 

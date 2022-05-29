@@ -33,10 +33,17 @@ class RegisterView(View):
         form = RegisterForm(request.POST)
         if form.is_valid():
             user = form.save(commit=False)
-            user.set_password(form.cleaned_data.get('password'))
-            user.save()
-            return redirect('login')
-        return render(request, 'portfoliolab_app/register.html', {'form': form})
+            password = form.cleaned_data['password']
+            password2 = form.cleaned_data['password2']
+            user.set_password(password)
+            user.set_password(password2)
+            if password == password2:
+                user.save()
+                return redirect('login')
+        password_error_message = 'Podane hasła różnią się od siebie. Sprawdź pisownię i spróbuj ponownie.'
+        return render(request,
+                      'portfoliolab_app/register.html',
+                      {'form': form, 'password_error_message': password_error_message})
 
 
 class LogoutView(View):

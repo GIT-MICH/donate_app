@@ -273,6 +273,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // TODO: get data from inputs and show them in summary
 
+          if (this.currentStep == 3) {
+              let categories = document.querySelector('input[name="categories"]:checked');
+              // let values = [];
+              // categories.forEach((categorie) => {
+              //     values.push(categorie.value);
+              // });
+              // alert(values);
+              // document.querySelector("#institution").classList.remove('active')
+          }
+
+
           if (this.currentStep == 5) {
 
               let bags = document.querySelector('input[name="quantity"]');
@@ -318,21 +329,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let data = new FormData(document.getElementById('donation_form'))
 
-          function getCookie(name) {
-              let cookieValue = null;
-              if (document.cookie && document.cookie !== '') {
-                  const cookies = document.cookie.split(';');
-                  for (let i = 0; i < cookies.length; i++) {
-                      const cookie = cookies[i].trim();
-                      if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                          break;
-                      }
-                  }
-              }
-              return cookieValue;
-          }
-          let csrftoken = getCookie('csrftoken');
+          // function getCookie(name) {
+          //     let cookieValue = null;
+          //     if (document.cookie && document.cookie !== '') {
+          //         const cookies = document.cookie.split(';');
+          //         for (let i = 0; i < cookies.length; i++) {
+          //             const cookie = cookies[i].trim();
+          //             if (cookie.substring(0, name.length + 1) === (name + '=')) {
+          //                 cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          //                 break;
+          //             }
+          //         }
+          //     }
+          //     return cookieValue;
+          // }
+          // let csrftoken = getCookie('csrftoken');
 
           let response = fetch('/add_donation/', {
               method: 'POST',
@@ -342,8 +353,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
           })
               .then(response => response.json())
-              .then(json => {
-                  console.log('Success:', json);
+              .then(data => {
+                  // console.log(window.location='/confirmation/')
+                  console.log('Success:', data);
               })
 
               .catch((error) => {
